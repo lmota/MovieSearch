@@ -60,6 +60,9 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
         self.tableView.estimatedRowHeight = CGFloat(Constants.movieSearchListTableViewEstimatedRowHeight)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.tableFooterView = UIView(frame:.zero)
+        self.tableView.backgroundColor = .clear
+        self.view.backgroundColor = Constants.backgroundColor
+        self.movieListViewControllerSpinner.stopAnimating()
         self.setupSearchController()
     }
     
