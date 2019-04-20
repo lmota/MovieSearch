@@ -54,7 +54,7 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
     }
     
     private func setUpUI(){
-        self.navigationItem.title = "Movies".localizedUppercase
+        self.navigationItem.title = Constants.screenTitle.localizedUppercase
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.estimatedRowHeight = CGFloat(Constants.movieSearchListTableViewEstimatedRowHeight)
@@ -68,7 +68,7 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
     
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search Movies".localizedCapitalized
+        searchController.searchBar.placeholder = Constants.searchControllerPlaceholder.localizedCapitalized
         
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true

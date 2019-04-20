@@ -24,4 +24,7 @@ struct Constants{
     static let moviePosterImageBaseURL = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
     static let movieSearchListTableViewEstimatedRowHeight = 180.0
     static let pageParameter = "page"
+    static let defaultPosterImageName = "DefaultMovieImage"
+    static let searchControllerPlaceholder = "Search Movies"
+    static let screenTitle = "Movies"
 }

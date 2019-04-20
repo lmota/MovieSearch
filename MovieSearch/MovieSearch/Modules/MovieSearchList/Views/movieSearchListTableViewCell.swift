@@ -47,7 +47,7 @@ class movieSearchListTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        posterImageView.image = UIImage(named: "DefaultMovieImage")
+        posterImageView.image = UIImage(named:Constants.defaultPosterImageName)
         spinner.stopAnimating()
         movieTitle.text = ""
         movieOverview.text = ""
