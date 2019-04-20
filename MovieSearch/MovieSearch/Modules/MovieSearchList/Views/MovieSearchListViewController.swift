@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieSearchListViewController: UIViewController {
+class MovieSearchListViewController: UIViewController, UITableViewDelegate {
   
     
     @IBOutlet weak var tableView: UITableView!
@@ -28,7 +28,7 @@ class MovieSearchListViewController: UIViewController {
     
     private var viewModel: MovieSearchListViewModel?
     
-    var searchText: String? {
+    fileprivate var searchText: String? {
         didSet {
             guard let queryText = searchText else { return }
                 
@@ -115,8 +115,8 @@ class MovieSearchListViewController: UIViewController {
         }
     }
 
-
 }
+
 
 extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
     
@@ -144,8 +144,7 @@ extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
         let action = UIAlertAction(title: "OK".localizedUppercase, style: .default)
         self.displayAlert(with: title , message: reason, actions: [action])
     }
-    
-    
+  
 }
 
 private extension MovieSearchListViewController {
@@ -162,7 +161,7 @@ private extension MovieSearchListViewController {
 /**
  * scroll view delegate
  */
-extension MovieSearchListViewController:UIScrollViewDelegate{
+extension MovieSearchListViewController : UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -201,18 +200,8 @@ extension MovieSearchListViewController : UITableViewDataSource {
         }
     }
     
-    
-    
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return UIView(frame:.zero)
-//    }
-    
-    
 }
 
-extension MovieSearchListViewController : UITableViewDelegate{
-    
-}
 
 extension MovieSearchListViewController : UISearchBarDelegate {
     

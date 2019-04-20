@@ -32,9 +32,7 @@ class MovieSearchListViewModel {
         self.delegate = delegate
         self.movieSearchRequest = request
     }
-    
-    private (set) var screenTitle = "Movies".localizedCapitalized
-    
+        
     var totalCount: Int {
         return total
     }
