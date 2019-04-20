@@ -92,14 +92,14 @@ class MovieSearchListViewModel {
                     
                     guard let self = self else {return}
                     
-                    self.currentPage += 1
+                    self.currentPage = response.currentPage
                     self.isFetchInProgress = false
                     
                     self.movieResults.append(contentsOf: response.results)
                     self.total = self.movieResults.count
                     
-                    // check if the current page is greater than total pages
-                    if self.currentPage > response.totalPages {
+                    // check if the current page is equal to the total pages, if yes, we have reached max page limit
+                    if self.currentPage == response.totalPages {
                         self.hasReachedMaxPageLimit = true
                     }
                     

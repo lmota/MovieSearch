@@ -1,5 +1,5 @@
 //
-//  MovieSearchListTableViewCell.swift
+//  movieSearchListTableViewCell.swift
 //  MovieSearch
 //
 //  Created by Dharamshi, Lopa D on 4/20/19.
@@ -8,13 +8,12 @@
 
 import UIKit
 
-class MovieSearchListTableViewCell: UITableViewCell {
+class movieSearchListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,11 +22,17 @@ class MovieSearchListTableViewCell: UITableViewCell {
         posterImageView.createRoundedBorder()
         self.contentView.backgroundColor = Constants.backgroundColor
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        posterImageView.image = UIImage(named: "DefaultMovieImage")
+    }
 
     func configure(at index:Int, viewModel:MovieSearchListViewModel?) {
         if let viewModel = viewModel {
             
-            self.spinner.startAnimating()
+//            self.spinner.startAnimating()
             
             guard let title = viewModel.getMovieTitle(at:index) else {
                 return

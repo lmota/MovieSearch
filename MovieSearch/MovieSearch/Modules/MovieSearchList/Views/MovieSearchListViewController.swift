@@ -12,10 +12,11 @@ class MovieSearchListViewController: UIViewController {
   
     
     @IBOutlet weak var tableView: UITableView!
+    var searchController:  UISearchController!
     @IBOutlet weak var movieListViewControllerSpinner: UIActivityIndicatorView!
     
     private enum identifiers {
-        static let listCellIdentifier = "movie search list cell"
+        static let listCellIdentifier = "customCell"
     }
     
     private enum movieSearchListViewControllerStates:Int {
@@ -27,28 +28,51 @@ class MovieSearchListViewController: UIViewController {
     
     private var viewModel: MovieSearchListViewModel?
     
+    var searchText: String? {
+        didSet {
+            guard let queryText = searchText else { return }
+                
+            if !queryText.isEmpty{
+                searchController?.searchBar.text = queryText
+                searchController?.searchBar.placeholder = queryText
+                
+                self.updateUI(for: .searchBegan)
+                let request = MovieSearchRequest.from(searchText:queryText)
+                
+                viewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager(), delegate: self, request: request)
+                viewModel?.fetchMovies()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
         self.setUpUI()
-        
-        self.updateUI(for: .searchBegan)
-        let request = MovieSearchRequest.from(searchText:"Harry Potter")
-        
-        viewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager(), delegate: self, request: request)
-        viewModel?.fetchMovies()
+
     }
     
     private func setUpUI(){
-        self.navigationItem.title = viewModel?.screenTitle
+        self.navigationItem.title = "Movies".localizedUppercase
         self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.tableView.estimatedRowHeight = CGFloat(Constants.movieSearchListTableViewEstimatedRowHeight)
         self.tableView.rowHeight = UITableView.automaticDimension
-
-//        let movieSearchListCell = UINib(nibName: identifiers.listCellIdentifier, bundle: nil)
-        self.tableView.register(MovieSearchListTableViewCell.self, forCellReuseIdentifier:identifiers.listCellIdentifier)
+        self.tableView.tableFooterView = UIView(frame:.zero)
+        self.setupSearchController()
+    }
+    
+    private func setupSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search Movies".localizedCapitalized
         
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.delegate = self
+        
+        navigationItem.titleView = searchController.searchBar
+        definesPresentationContext = true
     }
     
     convenience init(viewModel: MovieSearchListViewModel) {
@@ -135,6 +159,25 @@ private extension MovieSearchListViewController {
     }
 }
 
+/**
+ * scroll view delegate
+ */
+extension MovieSearchListViewController:UIScrollViewDelegate{
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        /**
+         * Need to determine if user has scrolled to the bottom of the table, if yes, we fetch the additional pages from server
+         * this will implement the infinite scrolling behaviour for the tableview pagination.
+         */
+        if (scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.height))
+        {
+            Logger.logInfo("Can begin fetching movies if max page limit is not reached")
+            viewModel?.fetchMovies()
+        }
+    }
+}
+
 extension MovieSearchListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.totalCount ?? 0
@@ -142,7 +185,7 @@ extension MovieSearchListViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: identifiers.listCellIdentifier,
-                                                    for: indexPath) as? MovieSearchListTableViewCell {
+                                                    for: indexPath) as? movieSearchListTableViewCell {
             
             if isLoadingCell(for: indexPath) {
                 cell.configure(at: indexPath.row, viewModel:.none)
@@ -158,10 +201,33 @@ extension MovieSearchListViewController : UITableViewDataSource {
         }
     }
     
-    private func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView(frame:.zero)
-    }
+    
+    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        return UIView(frame:.zero)
+//    }
     
     
 }
 
+extension MovieSearchListViewController : UITableViewDelegate{
+    
+}
+
+extension MovieSearchListViewController : UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        if searchBar == searchController.searchBar {
+            searchBar.placeholder = "Search Movies"
+        }
+        return true
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar == searchController.searchBar {
+            searchText = searchBar.text
+            searchController.isActive = false
+        }
+    }
+    
+}

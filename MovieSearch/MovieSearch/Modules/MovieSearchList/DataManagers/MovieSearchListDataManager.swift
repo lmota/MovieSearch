@@ -38,14 +38,15 @@ class MovieSearchListDataManager : MovieSearchListDataManagerProtocol {
      */
     func fetchMovies(with request: MovieSearchRequest, page: Int,
                               completion: @escaping (Result<MovieSearchListResponse, MovieSearchResponseError>) -> Void) {
+        
         guard let baseURL = baseURL else{
             return
         }
-        let urlRequest = URLRequest(url: baseURL)
         
-        let parameters = request.parameters
-        
-        let encodedURLRequest = urlRequest.encode(with: parameters)
+        // requesting for next page
+        let parameters = [Constants.pageParameter: "\(page+1)"].merging(request.parameters, uniquingKeysWith: +)
+
+        let encodedURLRequest = URLRequest(url: baseURL).encode(with: parameters)
         
         session.dataTask(with: encodedURLRequest, completionHandler: { data, response, error in
             
@@ -59,9 +60,6 @@ class MovieSearchListDataManager : MovieSearchListDataManagerProtocol {
             }
             
             do {
-                
-//                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
-//                print("\(json["results"])")
                 
                 let decodedResponse = try JSONDecoder().decode(MovieSearchListResponse.self, from: data)
                 completion(Result.success(decodedResponse))

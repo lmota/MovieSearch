@@ -27,7 +27,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="movie search list cell" rowHeight="180" id="ek3-Kj-Ez3" customClass="MovieSearchListTableViewCell" customModule="MovieSearch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="customCell" rowHeight="180" id="ek3-Kj-Ez3" customClass="movieSearchListTableViewCell" customModule="MovieSearch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ek3-Kj-Ez3" id="0GQ-QI-VwG">
@@ -38,7 +38,7 @@
                                                     <rect key="frame" x="169" y="71.5" width="37" height="37"/>
                                                     <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </activityIndicatorView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Oko-Cg-jNV">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Oko-Cg-jNV">
                                                     <rect key="frame" x="10" y="10" width="355" height="159.5"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultMovieImage" translatesAutoresizingMaskIntoConstraints="NO" id="Jra-6b-S4o">
@@ -48,20 +48,20 @@
                                                                 <constraint firstAttribute="width" constant="100" id="bTJ-dG-Ol1"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pHa-b7-EWQ">
-                                                            <rect key="frame" x="110" y="0.0" width="245" height="159.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pHa-b7-EWQ">
+                                                            <rect key="frame" x="110" y="14.5" width="245" height="130.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harry Potter and the Chamber of Secrets" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="yyD-Ie-04X">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="245" height="70"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harry Potter and the Chamber of Secrets" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyD-Ie-04X">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="245" height="42.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="ZMj-84-tQG">
-                                                                    <rect key="frame" x="0.0" y="90" width="245" height="69.5"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMj-84-tQG">
+                                                                    <rect key="frame" x="0.0" y="52.5" width="245" height="78"/>
                                                                     <string key="text">Ignoring threats to his life, Harry returns to Hogwarts to investigate – aided by Ron and Hermione – a mysterious series of attacks.</string>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -78,6 +78,12 @@
                                                 <constraint firstItem="fq5-qI-Qgh" firstAttribute="centerY" secondItem="0GQ-QI-VwG" secondAttribute="centerY" id="ncC-pV-rH1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="movieOverview" destination="ZMj-84-tQG" id="Ps9-hG-2Dw"/>
+                                            <outlet property="movieTitle" destination="yyD-Ie-04X" id="9Mc-S4-gtQ"/>
+                                            <outlet property="posterImageView" destination="Jra-6b-S4o" id="blK-k9-e8J"/>
+                                            <outlet property="spinner" destination="fq5-qI-Qgh" id="Uua-4W-Ahr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

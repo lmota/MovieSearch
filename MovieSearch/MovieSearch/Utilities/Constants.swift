@@ -23,4 +23,5 @@ struct Constants{
     static let movieSearchAPIURL = "https://api.themoviedb.org/3/search/movie"
     static let moviePosterImageBaseURL = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
     static let movieSearchListTableViewEstimatedRowHeight = 180.0
+    static let pageParameter = "page"
 }
