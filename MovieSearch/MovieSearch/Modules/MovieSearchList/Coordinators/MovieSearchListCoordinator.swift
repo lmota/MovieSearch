@@ -18,10 +18,10 @@ class MovieSearchListCoordinator : CoordinatorProtocol {
     }
     
     func start() {
-        let movieSearchListViewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager())
-        let movieSearchListViewController = MovieSearchListViewController(viewModel:movieSearchListViewModel)
-        let navigationController = UINavigationController(rootViewController: movieSearchListViewController)
-        window?.rootViewController = navigationController
+//        let movieSearchListViewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager())
+//        let movieSearchListViewController = MovieSearchListViewController(viewModel:movieSearchListViewModel)
+//        let navigationController = UINavigationController(rootViewController: movieSearchListViewController)
+//        window?.rootViewController = navigationController
     }
     
 }

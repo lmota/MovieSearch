@@ -21,5 +21,6 @@ struct Constants{
     static let movieSearchAPIKeyValue = "2a61185ef6a27f400fd92820ad9e8537" // need to store it in keychain?
     static let movieSearchApiParameter = "query"
     static let movieSearchAPIURL = "https://api.themoviedb.org/3/search/movie"
-    
+    static let moviePosterImageBaseURL = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+    static let movieSearchListTableViewEstimatedRowHeight = 180.0
 }

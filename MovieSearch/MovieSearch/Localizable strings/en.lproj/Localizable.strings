@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  MovieSearch
+
+  Created by Dharamshi, Lopa D on 4/20/19.
+  Copyright © 2019 Dharamshi Lopa D. All rights reserved.
+*/
+
+"Movies" = "Movies";
+"Failed to load the movies" = "Failed to load the movies";
+"OK" = "OK";
