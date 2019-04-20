@@ -10,10 +10,10 @@ import UIKit
 
 class MovieSearchListViewController: UIViewController, UITableViewDelegate {
   
-    
     @IBOutlet weak var tableView: UITableView!
     var searchController:  UISearchController!
     @IBOutlet weak var movieListViewControllerSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var informatoryLabel: UILabel!
     
     private enum identifiers {
         static let listCellIdentifier = "customCell"
@@ -62,6 +62,7 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
         self.tableView.tableFooterView = UIView(frame:.zero)
         self.tableView.backgroundColor = .clear
         self.view.backgroundColor = Constants.backgroundColor
+        informatoryLabel.text = "Please begin your search by entering the search text in the search bar".localizedCapitalized
         self.movieListViewControllerSpinner.stopAnimating()
         self.setupSearchController()
     }
@@ -92,12 +93,12 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
             tableView.isHidden = true
             movieListViewControllerSpinner.isHidden = true
             movieListViewControllerSpinner.stopAnimating()
-//            informatoryLabel.isHidden = false
+            informatoryLabel.isHidden = false
             
         case .searchBegan:
         self.view.bringSubviewToFront(movieListViewControllerSpinner)
             tableView.isHidden = true
-//            informatoryLabel.isHidden = true
+            informatoryLabel.isHidden = true
             movieListViewControllerSpinner.isHidden = false
             movieListViewControllerSpinner.startAnimating()
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -107,13 +108,13 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
             movieListViewControllerSpinner.stopAnimating()
             tableView.isHidden = false
             self.view.bringSubviewToFront(tableView)
-//            informatoryLabel.isHidden = true
+            informatoryLabel.isHidden = true
             
         case .searchFailedWithoutResults:
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             movieListViewControllerSpinner.stopAnimating()
             tableView.isHidden = true
-//            informatoryLabel.isHidden = false
+            informatoryLabel.isHidden = false
             
         }
     }

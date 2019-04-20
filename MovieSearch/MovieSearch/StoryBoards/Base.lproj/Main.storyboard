@@ -18,6 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTV-z7-sf3" userLabel="Informatory Label">
+                                <rect key="frame" x="20" y="293.5" width="335" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="slQ-mF-Tnf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="91i-X0-5SK">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -92,15 +101,20 @@
                         <constraints>
                             <constraint firstItem="mx2-Bq-fT9" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="5kH-1d-Qjb"/>
                             <constraint firstItem="mx2-Bq-fT9" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="NTl-xM-tGX"/>
+                            <constraint firstItem="VTV-z7-sf3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pre-8f-iwK"/>
+                            <constraint firstItem="VTV-z7-sf3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TJF-Bp-ilM"/>
                             <constraint firstItem="91i-X0-5SK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZWH-Yj-WF6"/>
+                            <constraint firstItem="VTV-z7-sf3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dxg-PT-STt"/>
                             <constraint firstItem="mx2-Bq-fT9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gI5-fe-Ulu"/>
                             <constraint firstAttribute="trailing" secondItem="mx2-Bq-fT9" secondAttribute="trailing" id="ljp-GF-sHe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VTV-z7-sf3" secondAttribute="trailing" constant="20" id="mdp-ww-VeG"/>
                             <constraint firstItem="91i-X0-5SK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="uWw-aB-cfM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="NIB-j1-sZB"/>
                     <connections>
+                        <outlet property="informatoryLabel" destination="VTV-z7-sf3" id="bHE-5f-ok4"/>
                         <outlet property="movieListViewControllerSpinner" destination="91i-X0-5SK" id="hXm-v5-nv5"/>
                         <outlet property="tableView" destination="mx2-Bq-fT9" id="6FY-Y9-2tH"/>
                     </connections>

@@ -15,7 +15,7 @@ class movieSearchListTableViewCell: UITableViewCell {
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
     
-    private enum movieSearchListTableViewCellStates{
+    fileprivate enum movieSearchListTableViewCellStates{
         case viewModelNotSet
         case viewModelSet
     }
@@ -28,7 +28,7 @@ class movieSearchListTableViewCell: UITableViewCell {
         self.contentView.backgroundColor = Constants.backgroundColor
     }
     
-    private func updateUI(for cellState:movieSearchListTableViewCellStates){
+    fileprivate func updateUI(for cellState:movieSearchListTableViewCellStates){
         switch cellState {
             case .viewModelNotSet:
                 movieTitle.isHidden = true
@@ -70,23 +70,46 @@ class movieSearchListTableViewCell: UITableViewCell {
         }
         movieOverview.text = overView
         
-        guard let posterImageURL = viewModel.getPosterImageURL(at: index) else {
+        guard let posterImageURLString = viewModel.getPosterImageURLString(at: index) else {
             updateUI(for: .viewModelSet)
             return
         }
         
-        // need to implement image caching
-        DispatchQueue.global(qos:.background).async {
-            
-            if let data = try? Data(contentsOf: posterImageURL) {
-                DispatchQueue.main.async { [weak self] in
-                    // once we have the data go back to main thread and load the image view
-                    self?.posterImageView.image = UIImage(data: data)
-                    self?.updateUI(for: .viewModelSet)
-                }
-            }
-        }
-  
+        cacheImage(urlString:posterImageURLString)
     }
+}
 
+let imageCache = NSCache<AnyObject, AnyObject>()
+
+extension movieSearchListTableViewCell {
+    func cacheImage(urlString: String){
+        
+        guard let url = URL(string: urlString) else {return}
+        
+        posterImageView.image = UIImage(named: Constants.defaultPosterImageName)
+        
+        if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            posterImageView.image = imageFromCache
+            updateUI(for: .viewModelSet)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let imageData = data  else {
+                self?.updateUI(for: .viewModelSet)
+                return
+                
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let imageToCache = UIImage(data: imageData) else {
+                    self?.updateUI(for: .viewModelSet)
+                    return
+                }
+                imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
+                self?.posterImageView.image = imageToCache
+                self?.updateUI(for: .viewModelSet)
+            }
+            
+        }.resume()
+    }
 }

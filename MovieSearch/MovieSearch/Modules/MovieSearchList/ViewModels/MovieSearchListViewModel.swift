@@ -56,7 +56,7 @@ class MovieSearchListViewModel {
         return movieResults[index].overview
     }
     
-    func getPosterImageURL(at index:Int)->URL? {
+    func getPosterImageURLString(at index:Int)->String? {
         
         guard index < movieResults.count else { return nil }
         
@@ -65,7 +65,7 @@ class MovieSearchListViewModel {
             return nil
         }
         
-        return posterImageBaseUrl.appendingPathComponent(posterPath)
+        return posterImageBaseUrl.appendingPathComponent(posterPath).absoluteString
     }
     
     // fetching the movies from backend
