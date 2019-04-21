@@ -11,12 +11,9 @@ import UIKit
 
 extension UIViewController{
     /**
-     * Extension on UIViewController for presenting alert that presents an alert only if we dont have any presented view controller
+     * Extension on UIViewController for presenting alert
      */
     func displayAlert(with title: String, message: String, actions: [UIAlertAction]? = nil) {
-        guard presentedViewController == nil else {
-            return
-        }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         actions?.forEach { action in

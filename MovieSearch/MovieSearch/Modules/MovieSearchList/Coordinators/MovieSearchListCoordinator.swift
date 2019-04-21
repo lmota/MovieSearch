@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ * Module coordinator, navigating to the MovieSearchListViewController
+ */
 class MovieSearchListCoordinator : CoordinatorProtocol {
     
     var navigationController:UINavigationController

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // Override point for customization after application launch.
+        // Customizing the app launch using Coordinator design pattern
         let navController = UINavigationController()
         appCoordinator = MovieSearchAppCoordinator(navigationController: navController)
         appCoordinator?.start()

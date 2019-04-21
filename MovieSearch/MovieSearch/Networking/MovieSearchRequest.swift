@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ * structure for MovieSearchRequest
+ */
 struct MovieSearchRequest {
     var path: String {
         return Constants.movieSearchAPIPath
@@ -26,7 +29,10 @@ extension MovieSearchRequest {
      * return MovieSearchRequest - request to be sent for the apis
      */
     static func from(searchText: String) -> MovieSearchRequest {
+        // api key parameter
         let defaultParameters = [Constants.movieSearchAPIKeyParameter: Constants.movieSearchAPIKeyValue]
+        
+        // search text parameter
         let parameters = [Constants.movieSearchApiParameter: "\(searchText)"].merging(defaultParameters, uniquingKeysWith: +)
         return MovieSearchRequest(parameters: parameters)
     }

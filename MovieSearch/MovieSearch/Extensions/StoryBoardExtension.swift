@@ -9,10 +9,16 @@
 import Foundation
 import UIKit
 
+/**
+ * Protocol to instantiate viewController from Storyboard
+ */
 protocol Storyboarded {
     static func instantiate() -> Self
 }
 
+/**
+ * Storyboarded protocol implementation for UIViewController
+ */
 extension Storyboarded where Self: UIViewController {
     
     static func instantiate() -> Self {

@@ -11,3 +11,4 @@
 "OK" = "OK";
 "Search Movies" = "Search Movies";
 "Please begin your search by entering the search text in the search bar" = "Please begin your search by entering the search text in the search bar";
+"Unable to find any movies for this search. Please try again." = "Unable to find any movies for this search. Please try again.";

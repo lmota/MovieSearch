@@ -8,13 +8,46 @@
 
 import UIKit
 
+/**
+ * MovieSearchListViewController - Displaying the movie results and search controller to find movies
+ */
+
 class MovieSearchListViewController: UIViewController, UITableViewDelegate, Storyboarded {
   
+    // MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var movieListViewControllerSpinner: UIActivityIndicatorView!
     @IBOutlet weak var informatoryLabel: UILabel!
+    
+    // MARK: vars
+    private var viewModel: MovieSearchListViewModel?
     weak var coordinator: MovieSearchListCoordinator?
-    var searchController:  UISearchController!
+    
+    lazy var searchController:  UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        self.navigationItem.titleView = searchController.searchBar
+        searchController.searchBar.delegate = self
+        return searchController
+    }()
+    
+    fileprivate var searchText: String? {
+        didSet {
+            guard let queryText = searchText else { return }
+            
+            if !queryText.isEmpty{
+                searchController.searchBar.text = queryText
+                searchController.searchBar.placeholder = queryText
+                
+                self.updateUI(for: .searchBegan)
+                let request = MovieSearchRequest.from(searchText:queryText)
+                
+                viewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager(), delegate: self, request: request)
+                viewModel?.fetchMovies()
+            }
+        }
+    }
+    
+    // MARK: enumerations
     
     private enum identifiers {
         static let listCellIdentifier = "customCell"
@@ -26,43 +59,31 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
         case searchEndedWithResults
         case searchFailedWithoutResults
     }
-    
-    private var viewModel: MovieSearchListViewModel?
-    
-    fileprivate var searchText: String? {
-        didSet {
-            guard let queryText = searchText else { return }
-                
-            if !queryText.isEmpty{
-                searchController?.searchBar.text = queryText
-                searchController?.searchBar.placeholder = queryText
-                
-                self.updateUI(for: .searchBegan)
-                let request = MovieSearchRequest.from(searchText:queryText)
-                
-                viewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager(), delegate: self, request: request)
-                viewModel?.fetchMovies()
-            }
-        }
-    }
+
+    // MARK: UI Setup functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
         self.setUpUI()
-
     }
     
+    /**
+     *  private function to set up the UI for the view Controller
+     */
     private func setUpUI(){
         self.navigationItem.title = Constants.screenTitle.localizedUppercase
         self.view.backgroundColor = Constants.backgroundColor
         informatoryLabel.text = Constants.informationLabelText.localizedCapitalized
         self.movieListViewControllerSpinner.stopAnimating()
         self.setUpTableView()
-        self.setupSearchController()
+        searchController.customize()
     }
     
+    /**
+     *  private function to set up the tableview for displaying the movie search results
+     */
     private func setUpTableView() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -72,17 +93,13 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
         self.tableView.backgroundColor = .clear
     }
     
-    private func setupSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
-        navigationItem.titleView = searchController.searchBar
-        searchController.searchBar.delegate = self
-        searchController.customize()
-    }
     
     /**
-     * function that updates the various ui elements on the screen based on its state
+     * function that updates the various ui elements on the screen based on viewController's state
+     * parameters - enum indicating the viewControllerState
+     * returns - nothing
      */
-    private func updateUI(for state:movieSearchListViewControllerStates){
+    private func updateUI(for state:movieSearchListViewControllerStates) {
         switch state {
         case .searchNotStarted:
             tableView.isHidden = true
@@ -116,10 +133,18 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
 
 }
 
+// MARK: extension MovieSearchListViewModelDelegate
 
+/**
+ * Implementing the MovieSearchListViewModelDelegate to handle the success and failure of search results
+ */
 extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
     
-    //  on success case of the fetch completion
+    /**
+     * function to handle success case of the fetch completion
+     * parameters - new index paths to reload
+     * returns - nothing
+     */
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
         self.updateUI(for: .searchEndedWithResults)
         
@@ -135,7 +160,11 @@ extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
         self.tableView.scrollToRow(at: firstNewIndexPath, at: .top, animated:true)
     }
     
-    // on the failure case of fetch completion
+    /**
+     * function to handle the failure case of fetch completion
+     * parameters - string indicating the reason for failure
+     * returns - nothing
+     */
     func onFetchFailed(with reason: String) {
         
         self.updateUI(for: .searchFailedWithoutResults)
@@ -146,8 +175,15 @@ extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
   
 }
 
+// MARK: extension MovieSearchListViewController to compute if current cell is a loading cell
+
 private extension MovieSearchListViewController {
-    // determine if the loading cell needs to appear
+
+    /**
+     * function to determine if the loading cell needs to appear
+     * parameters - current indexPath for the cell to be rendered
+     * returns - Bool indicating if the loading cell needs to be displayed.
+     */
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         
         if let viewModel = viewModel{
@@ -157,16 +193,18 @@ private extension MovieSearchListViewController {
     }
 }
 
+// MARK: extenstion UIScrollViewDelegate
+
 /**
- * scroll view delegate
+ * extension to implement UIScrollViewDelegate
  */
 extension MovieSearchListViewController : UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         /**
-         * Need to determine if user has scrolled to the bottom of the table, if yes, we fetch the additional pages from server
-         * this will implement the infinite scrolling behaviour for the tableview pagination.
+         * Need to determine if user has scrolled to the bottom of the table,
+         * if yes, we check if we can fetch the additional pages from server.
+         * This will implement the infinite scrolling behaviour for the tableview pagination.
          */
         if (scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.height))
         {
@@ -176,6 +214,11 @@ extension MovieSearchListViewController : UIScrollViewDelegate{
     }
 }
 
+// MARK: extenstion UITableViewDataSource
+
+/**
+ * extension to implement UITableViewDataSource
+ */
 extension MovieSearchListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.totalCount ?? 0
@@ -202,11 +245,16 @@ extension MovieSearchListViewController : UITableViewDataSource {
 }
 
 
+// MARK: extenstion UISearchBarDelegate
+
+/**
+ * extension to implement UISearchBarDelegate
+ */
 extension MovieSearchListViewController : UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         if searchBar == searchController.searchBar {
-            searchBar.placeholder = "Search Movies"
+            searchBar.placeholder = Constants.searchControllerPlaceholder.localizedCapitalized
         }
         return true
     }

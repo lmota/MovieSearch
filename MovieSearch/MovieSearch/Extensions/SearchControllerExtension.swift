@@ -9,38 +9,42 @@
 import Foundation
 import UIKit
 
+/**
+ *  SearchController extension to customize search
+ */
 extension UISearchController {
     
     func customize() {
-        self.searchBar.placeholder = Constants.searchControllerPlaceholder.localizedCapitalized
         
+        // customizing few search controller attributes
         self.hidesNavigationBarDuringPresentation = false
         self.dimsBackgroundDuringPresentation = true
         self.definesPresentationContext = true
         
-        //sets searchBar backgroundColor and barTintColor
+        //sets searchBar backgroundColor, barTintColor, barStyle
         self.searchBar.backgroundColor = Constants.searchBarBackgroundColor
         self.searchBar.barTintColor = Constants.searchBarTintColor
         self.searchBar.searchBarStyle = .prominent
         
+        // gets the search field from the search bar
         guard let field = self.searchBar.value(forKey: Constants.searchFieldKey) as? UITextField,
             let iconView = field.leftView as? UIImageView else {
                 return
         }
         
+        //customize search field
         field.layer.cornerRadius = CGFloat(Constants.searchFieldCornerRadius)
-        
-        //sets text Color
         field.textColor = .darkGray
         field.font = UIFont.systemFont(ofSize: CGFloat(Constants.searchFieldFontSize))
         field.layer.masksToBounds = true
         field.returnKeyType = .search
         
-        //sets placeholder text Color
+        //sets search field attributed placeholder
+        self.searchBar.placeholder = Constants.searchControllerPlaceholder.localizedCapitalized
         let placeholderString = NSAttributedString(string: Constants.searchControllerPlaceholder.localizedCapitalized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         field.attributedPlaceholder = placeholderString
         
-        //sets icon Color
+        //sets search field icon
         iconView.image = UIImage(named:Constants.searchImage)
         
     }

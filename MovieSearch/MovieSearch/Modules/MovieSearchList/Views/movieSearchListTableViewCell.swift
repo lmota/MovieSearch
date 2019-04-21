@@ -8,18 +8,24 @@
 
 import UIKit
 
+/**
+ *  Custom table view cell for movie search results list view
+ */
 class movieSearchListTableViewCell: UITableViewCell {
 
+    // MARK: IBOutlets
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
     
+    // MARK: Enumerations
     fileprivate enum movieSearchListTableViewCellStates{
         case viewModelNotSet
         case viewModelSet
     }
     
+    // MARK: Custom cell initialization
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -28,6 +34,7 @@ class movieSearchListTableViewCell: UITableViewCell {
         self.contentView.backgroundColor = Constants.backgroundColor
     }
     
+    // MARK: Update UI for customCell based on the state
     fileprivate func updateUI(for cellState:movieSearchListTableViewCellStates){
         switch cellState {
             case .viewModelNotSet:
@@ -44,6 +51,8 @@ class movieSearchListTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: CustomCell preparation for reuse
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -53,6 +62,7 @@ class movieSearchListTableViewCell: UITableViewCell {
         movieOverview.text = ""
     }
 
+    // Custom cell configuration from viewModel for the indexpath
     func configure(at index:Int, viewModel:MovieSearchListViewModel?) {
         
         guard let viewModel = viewModel else {
@@ -75,41 +85,53 @@ class movieSearchListTableViewCell: UITableViewCell {
             return
         }
         
-        cacheImage(urlString:posterImageURLString)
+        // cache the poster image using NSCache
+        cacheImage(urlString:posterImageURLString, imageView: posterImageView)
     }
 }
 
+// MARK: Extension for ImageCaching
+
 let imageCache = NSCache<AnyObject, AnyObject>()
 
+/**
+ * movieSearchListTableViewCell extension to implement Image caching for the imageview
+ */
 extension movieSearchListTableViewCell {
-    func cacheImage(urlString: String){
+    
+    func cacheImage(urlString: String, imageView: UIImageView) {
         
-        guard let url = URL(string: urlString) else {return}
+        guard let url = URL(string: urlString) else {
+            return
+        }
         
-        posterImageView.image = UIImage(named: Constants.defaultPosterImageName)
+        // setting the default poster image
+        imageView.image = UIImage(named: Constants.defaultPosterImageName)
         
+        // check of the image is available in the cache, if yes, use the cached image
         if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            posterImageView.image = imageFromCache
+            imageView.image = imageFromCache
             updateUI(for: .viewModelSet)
             return
         }
         
+        // If cache is unavailable, fetch the image from network on a background thread using URLSession dataTask
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let imageData = data  else {
-                self?.updateUI(for: .viewModelSet)
-                return
+            
+            // Once we get the response, switch back to main thread to update ui
+             DispatchQueue.main.async { [weak self] in
                 
-            }
-            DispatchQueue.main.async { [weak self] in
-                guard let imageToCache = UIImage(data: imageData) else {
+                // if no image found then update the UI
+                guard let imageData = data, let imageToCache = UIImage(data: imageData)  else {
                     self?.updateUI(for: .viewModelSet)
                     return
                 }
+
+                // If image received, set it in the cache and update ui
                 imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
-                self?.posterImageView.image = imageToCache
+                imageView.image = imageToCache
                 self?.updateUI(for: .viewModelSet)
             }
-            
         }.resume()
     }
 }

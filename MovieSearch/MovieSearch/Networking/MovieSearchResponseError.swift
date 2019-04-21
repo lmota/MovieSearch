@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- * enum for the response failure.
+ * enumeration for the response failure.
  */
 enum MovieSearchResponseError: Error {
     case network
