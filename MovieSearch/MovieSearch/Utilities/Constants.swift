@@ -24,10 +24,17 @@ struct Constants{
     static let moviePosterImageBaseURL = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
     static let movieSearchListTableViewEstimatedRowHeight = 180.0
     static let pageParameter = "page"
-    static let defaultPosterImageName = "DefaultMovieImage"
+    static let defaultPosterImageName = "placeholderPoster"
     static let searchControllerPlaceholder = "Search Movies"
     static let screenTitle = "Movies"
     static let informationLabelText = "Please begin your search by entering the search text in the search bar"
     static let failedToLoadMoviesMessage = "Failed to load the movies"
     static let OkButtonTitle = "OK"
+    static let searchImage = "find"
+    static let searchFieldFontSize = 17.0
+    static let searchFieldCornerRadius = 10.0
+    static let searchFieldKey = "searchField"
+    static let searchBarBackgroundColor = UIColor(red:0, green: 0, blue: 0, alpha: 0.5)
+    static let searchBarTintColor = UIColor.blue
+    
 }

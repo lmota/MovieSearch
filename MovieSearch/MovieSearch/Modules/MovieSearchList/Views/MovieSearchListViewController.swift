@@ -56,28 +56,27 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
     
     private func setUpUI(){
         self.navigationItem.title = Constants.screenTitle.localizedUppercase
+        self.view.backgroundColor = Constants.backgroundColor
+        informatoryLabel.text = Constants.informationLabelText.localizedCapitalized
+        self.movieListViewControllerSpinner.stopAnimating()
+        self.setUpTableView()
+        self.setupSearchController()
+    }
+    
+    private func setUpTableView() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.estimatedRowHeight = CGFloat(Constants.movieSearchListTableViewEstimatedRowHeight)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.tableFooterView = UIView(frame:.zero)
         self.tableView.backgroundColor = .clear
-        self.view.backgroundColor = Constants.backgroundColor
-        informatoryLabel.text = Constants.informationLabelText.localizedCapitalized
-        self.movieListViewControllerSpinner.stopAnimating()
-        self.setupSearchController()
     }
     
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = Constants.searchControllerPlaceholder.localizedCapitalized
-        
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.delegate = self
-        
         navigationItem.titleView = searchController.searchBar
-        definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        searchController.customize()
     }
     
     /**

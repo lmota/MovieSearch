@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // Customizing the navigation bar appearance
-        UINavigationBar.appearance().barTintColor = Constants.backgroundColor
-        UINavigationBar.appearance().barStyle = .default
+        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().barStyle = .blackTranslucent
        
         return true
     }
