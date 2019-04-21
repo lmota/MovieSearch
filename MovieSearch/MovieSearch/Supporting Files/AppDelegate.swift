@@ -17,13 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Override point for customization after application launch.
-//        appCoordinator = MovieSearchAppCoordinator(window: window)
-//        appCoordinator?.start()
+        let navController = UINavigationController()
+        appCoordinator = MovieSearchAppCoordinator(navigationController: navController)
+        appCoordinator?.start()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
         
         // Customizing the navigation bar appearance
         UINavigationBar.appearance().barTintColor = Constants.backgroundColor
         UINavigationBar.appearance().barStyle = .default
-        
+       
         return true
     }
 

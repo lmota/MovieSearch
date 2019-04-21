@@ -11,17 +11,18 @@ import UIKit
 
 class MovieSearchListCoordinator : CoordinatorProtocol {
     
-    private var window: UIWindow?
+    var navigationController:UINavigationController
     
-    init(window: UIWindow?) {
-        self.window = window
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
     }
     
     func start() {
-//        let movieSearchListViewModel = MovieSearchListViewModel(dataManager: MovieSearchListDataManager())
-//        let movieSearchListViewController = MovieSearchListViewController(viewModel:movieSearchListViewModel)
-//        let navigationController = UINavigationController(rootViewController: movieSearchListViewController)
-//        window?.rootViewController = navigationController
+        
+        let movieSearchListViewController = MovieSearchListViewController.instantiate()
+        movieSearchListViewController.coordinator = self
+        navigationController.pushViewController(movieSearchListViewController, animated: false)
+
     }
-    
 }
+

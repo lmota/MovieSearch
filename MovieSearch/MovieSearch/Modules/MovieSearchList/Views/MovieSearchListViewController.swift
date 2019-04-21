@@ -8,12 +8,14 @@
 
 import UIKit
 
-class MovieSearchListViewController: UIViewController, UITableViewDelegate {
+class MovieSearchListViewController: UIViewController, UITableViewDelegate, Storyboarded {
   
     @IBOutlet weak var tableView: UITableView!
     var searchController:  UISearchController!
     @IBOutlet weak var movieListViewControllerSpinner: UIActivityIndicatorView!
     @IBOutlet weak var informatoryLabel: UILabel!
+    weak var coordinator: MovieSearchListCoordinator?
+
     
     private enum identifiers {
         static let listCellIdentifier = "customCell"
@@ -77,11 +79,6 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate {
         
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
-    }
-    
-    convenience init(viewModel: MovieSearchListViewModel) {
-        self.init()
-        self.viewModel = viewModel
     }
     
     /**

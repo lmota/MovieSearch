@@ -43,6 +43,7 @@
 		4084E79B226B93D400D1167F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4084E79D226B93D400D1167F /* Localizable.strings */; };
 		4084E79F226BA12700D1167F /* movieSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4084E79E226BA12700D1167F /* movieSearchListTableViewCell.swift */; };
 		4084E7A0226BA12700D1167F /* movieSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4084E79E226BA12700D1167F /* movieSearchListTableViewCell.swift */; };
+		40AAFCAA226C224400651768 /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAFCA9226C224400651768 /* StoryBoardExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		4084E793226B38C300D1167F /* MovieSearchResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchResponseError.swift; sourceTree = "<group>"; };
 		4084E79C226B93D400D1167F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4084E79E226BA12700D1167F /* movieSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = movieSearchListTableViewCell.swift; sourceTree = "<group>"; };
+		40AAFCA9226C224400651768 /* StoryBoardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryBoardExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 				4084E786226B35BA00D1167F /* AlertControllerExtension.swift */,
 				4084E78A226B360100D1167F /* HTTPURLResponseExtension.swift */,
 				4084E78D226B364100D1167F /* URLRequestExtension.swift */,
+				40AAFCA9226C224400651768 /* StoryBoardExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				4084E76F226B22C900D1167F /* MovieSearchResultsModel.swift in Sources */,
 				4084E784226B356200D1167F /* ImageViewExtension.swift in Sources */,
 				4084E779226B23DE00D1167F /* MovieSearchAppCoordinator.swift in Sources */,
+				40AAFCAA226C224400651768 /* StoryBoardExtension.swift in Sources */,
 				4084E772226B22FD00D1167F /* MovieSearchListDataManager.swift in Sources */,
 				4084E791226B36DC00D1167F /* MovieSearchRequest.swift in Sources */,
 				4084E781226B352A00D1167F /* Logger.swift in Sources */,
@@ -586,7 +590,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lopa.appleios.MovieSearch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lopa.appleios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -605,7 +609,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lopa.appleios.MovieSearch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lopa.appleios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

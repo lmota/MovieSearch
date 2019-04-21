@@ -10,18 +10,18 @@ import Foundation
 import UIKit
 
 protocol CoordinatorProtocol {
+    var navigationController: UINavigationController { get set }
     func start()
 }
 
 class MovieSearchAppCoordinator: CoordinatorProtocol {
+    var navigationController: UINavigationController
     
-    private var window: UIWindow?
-    
-    init(window: UIWindow?) {
-        self.window = window
+    init(navigationController:UINavigationController) {
+        self.navigationController = navigationController
     }
     
     func start() {
-        MovieSearchListCoordinator(window: self.window).start()
+        MovieSearchListCoordinator(navigationController: navigationController).start()
     }
 }
