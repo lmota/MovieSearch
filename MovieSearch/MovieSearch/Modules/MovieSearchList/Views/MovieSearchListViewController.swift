@@ -11,11 +11,10 @@ import UIKit
 class MovieSearchListViewController: UIViewController, UITableViewDelegate, Storyboarded {
   
     @IBOutlet weak var tableView: UITableView!
-    var searchController:  UISearchController!
     @IBOutlet weak var movieListViewControllerSpinner: UIActivityIndicatorView!
     @IBOutlet weak var informatoryLabel: UILabel!
     weak var coordinator: MovieSearchListCoordinator?
-
+    var searchController:  UISearchController!
     
     private enum identifiers {
         static let listCellIdentifier = "customCell"
@@ -64,7 +63,7 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
         self.tableView.tableFooterView = UIView(frame:.zero)
         self.tableView.backgroundColor = .clear
         self.view.backgroundColor = Constants.backgroundColor
-        informatoryLabel.text = "Please begin your search by entering the search text in the search bar".localizedCapitalized
+        informatoryLabel.text = Constants.informationLabelText.localizedCapitalized
         self.movieListViewControllerSpinner.stopAnimating()
         self.setupSearchController()
     }
@@ -93,7 +92,7 @@ class MovieSearchListViewController: UIViewController, UITableViewDelegate, Stor
             informatoryLabel.isHidden = false
             
         case .searchBegan:
-        self.view.bringSubviewToFront(movieListViewControllerSpinner)
+            self.view.bringSubviewToFront(movieListViewControllerSpinner)
             tableView.isHidden = true
             informatoryLabel.isHidden = true
             movieListViewControllerSpinner.isHidden = false
@@ -141,8 +140,8 @@ extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
     func onFetchFailed(with reason: String) {
         
         self.updateUI(for: .searchFailedWithoutResults)
-        let title = "Failed to load the movies".localizedCapitalized
-        let action = UIAlertAction(title: "OK".localizedUppercase, style: .default)
+        let title = Constants.failedToLoadMoviesMessage.localizedCapitalized
+        let action = UIAlertAction(title: Constants.OkButtonTitle.localizedUppercase, style: .default)
         self.displayAlert(with: title , message: reason, actions: [action])
     }
   

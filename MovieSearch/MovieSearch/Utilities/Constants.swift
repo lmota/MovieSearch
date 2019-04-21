@@ -27,4 +27,7 @@ struct Constants{
     static let defaultPosterImageName = "DefaultMovieImage"
     static let searchControllerPlaceholder = "Search Movies"
     static let screenTitle = "Movies"
+    static let informationLabelText = "Please begin your search by entering the search text in the search bar"
+    static let failedToLoadMoviesMessage = "Failed to load the movies"
+    static let OkButtonTitle = "OK"
 }
