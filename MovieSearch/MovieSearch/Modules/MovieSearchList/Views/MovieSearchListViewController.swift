@@ -176,7 +176,6 @@ extension MovieSearchListViewController: MovieSearchListViewModelDelegate {
 }
 
 // MARK: extension MovieSearchListViewController to compute if current cell is a loading cell
-
 private extension MovieSearchListViewController {
 
     /**
