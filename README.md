@@ -63,6 +63,7 @@ What would I have done additional, if had more time, towards appstore submission
 4. Added more unit tests around the view model to test for negative scenarios.
 5. Need to test the app under low memory conditions, profiling, checking for leaks etc.
 6. In an ideal corporate scenario before the app is submitted to the appstore it goes through QA testing (manual and automatic), various static scans and penetration testing etc.
+7. Tested the app using Apple’s Network Link Conditioner.
 
 
 Reference
