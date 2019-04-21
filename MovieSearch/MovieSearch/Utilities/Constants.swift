@@ -37,5 +37,6 @@ struct Constants{
     static let searchBarBackgroundColor = UIColor(red:0, green: 0, blue: 0, alpha: 0.5)
     static let searchBarTintColor = UIColor.blue
     static let searchFailureAlertText = "Unable to find any movies for this search. Please try again."
+    static let imageCacheCountLimit = 30
     
 }

@@ -98,12 +98,15 @@ let imageCache = NSCache<AnyObject, AnyObject>()
  * movieSearchListTableViewCell extension to implement Image caching for the imageview
  */
 extension movieSearchListTableViewCell {
+
     
     func cacheImage(urlString: String, imageView: UIImageView) {
         
         guard let url = URL(string: urlString) else {
             return
         }
+        //setting the imageCacheCountLimit
+        imageCache.countLimit = Constants.imageCacheCountLimit
         
         // setting the default poster image
         imageView.image = UIImage(named: Constants.defaultPosterImageName)
