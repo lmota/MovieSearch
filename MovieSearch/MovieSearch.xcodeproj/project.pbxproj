@@ -45,6 +45,11 @@
 		4084E7A0226BA12700D1167F /* movieSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4084E79E226BA12700D1167F /* movieSearchListTableViewCell.swift */; };
 		40AAFCAA226C224400651768 /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAFCA9226C224400651768 /* StoryBoardExtension.swift */; };
 		40AAFCAC226CB99600651768 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAFCAB226CB99600651768 /* SearchControllerExtension.swift */; };
+		40AAFCAE226CF5BF00651768 /* MovieSearchMockResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 40AAFCAD226CF5BF00651768 /* MovieSearchMockResponse.json */; };
+		40AAFCAF226CF5BF00651768 /* MovieSearchMockResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 40AAFCAD226CF5BF00651768 /* MovieSearchMockResponse.json */; };
+		40AAFCB3226CFD3F00651768 /* MovieSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4084E743226B201900D1167F /* MovieSearchListViewController.swift */; };
+		40AAFCB4226CFD7200651768 /* StoryBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAFCA9226C224400651768 /* StoryBoardExtension.swift */; };
+		40AAFCB5226CFD7500651768 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAFCAB226CB99600651768 /* SearchControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +90,7 @@
 		4084E79E226BA12700D1167F /* movieSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = movieSearchListTableViewCell.swift; sourceTree = "<group>"; };
 		40AAFCA9226C224400651768 /* StoryBoardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryBoardExtension.swift; sourceTree = "<group>"; };
 		40AAFCAB226CB99600651768 /* SearchControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerExtension.swift; sourceTree = "<group>"; };
+		40AAFCAD226CF5BF00651768 /* MovieSearchMockResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MovieSearchMockResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +276,7 @@
 			children = (
 				4084E790226B36DC00D1167F /* MovieSearchRequest.swift */,
 				4084E793226B38C300D1167F /* MovieSearchResponseError.swift */,
+				40AAFCAD226CF5BF00651768 /* MovieSearchMockResponse.json */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -367,6 +374,7 @@
 				4084E79A226B93D400D1167F /* Localizable.strings in Resources */,
 				4084E749226B201B00D1167F /* Assets.xcassets in Resources */,
 				4084E747226B201900D1167F /* Main.storyboard in Resources */,
+				40AAFCAE226CF5BF00651768 /* MovieSearchMockResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4084E79B226B93D400D1167F /* Localizable.strings in Resources */,
+				40AAFCAF226CF5BF00651768 /* MovieSearchMockResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,10 +422,13 @@
 				4084E773226B22FD00D1167F /* MovieSearchListDataManager.swift in Sources */,
 				4084E77A226B23DE00D1167F /* MovieSearchAppCoordinator.swift in Sources */,
 				4084E795226B38C300D1167F /* MovieSearchResponseError.swift in Sources */,
+				40AAFCB5226CFD7500651768 /* SearchControllerExtension.swift in Sources */,
 				4084E788226B35BA00D1167F /* AlertControllerExtension.swift in Sources */,
 				4084E770226B22C900D1167F /* MovieSearchResultsModel.swift in Sources */,
+				40AAFCB4226CFD7200651768 /* StoryBoardExtension.swift in Sources */,
 				4084E776226B236D00D1167F /* MovieSearchListCoordinator.swift in Sources */,
 				4084E7A0226BA12700D1167F /* movieSearchListTableViewCell.swift in Sources */,
+				40AAFCB3226CFD3F00651768 /* MovieSearchListViewController.swift in Sources */,
 				4084E792226B36DC00D1167F /* MovieSearchRequest.swift in Sources */,
 				4084E785226B356200D1167F /* ImageViewExtension.swift in Sources */,
 				4084E77F226B328400D1167F /* Constants.swift in Sources */,

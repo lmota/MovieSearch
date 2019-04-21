@@ -23,13 +23,14 @@ class MovieSearchListViewModel {
     
     // MARK: vars for the view model
     private var movieResults = [MovieSearchResultsModel]()
-    private var dataManager: MovieSearchListDataManager
-    private var movieSearchRequest : MovieSearchRequest
+    private (set) var dataManager: MovieSearchListDataManagerProtocol
+    private (set) var movieSearchRequest : MovieSearchRequest
     private weak var delegate : MovieSearchListViewModelDelegate?
     private var currentPage = 0
     private var total = 0
     private var isFetchInProgress = false
     private var hasReachedMaxPageLimit = false
+    private (set) var totalPages = 0
     
     var totalCount: Int {
         return total
@@ -40,7 +41,7 @@ class MovieSearchListViewModel {
     }
     
     // MARK: Initializer
-    init(dataManager: MovieSearchListDataManager, delegate: MovieSearchListViewModelDelegate, request:MovieSearchRequest) {
+    init(dataManager: MovieSearchListDataManagerProtocol, delegate: MovieSearchListViewModelDelegate?, request:MovieSearchRequest) {
         self.dataManager = dataManager
         self.delegate = delegate
         self.movieSearchRequest = request
@@ -90,7 +91,7 @@ class MovieSearchListViewModel {
      *  Parameters - none
      *  returns - Bool indicating if we can proceed with a fetch request
      */
-    private func canProceedWithFetchingMovies() -> Bool {
+    func canProceedWithFetchingMovies() -> Bool {
         return !isFetchInProgress && !hasReachedMaxPageLimit
     }
     
@@ -99,7 +100,7 @@ class MovieSearchListViewModel {
      *  Parameters - none
      *  returns - Bool indicating if any search results were found
      */
-    private func didFindResults() -> Bool {
+    func didFindResults() -> Bool {
         return self.total > 0
     }
     
@@ -108,8 +109,8 @@ class MovieSearchListViewModel {
      *  Parameters - response
      *  returns - Bool indicating if max limit is reached
      */
-    private func isMaxPageLimitReached(response:MovieSearchListResponse) -> Bool {
-        return self.currentPage == response.totalPages
+    func isMaxPageLimitReached() -> Bool {
+        return currentPage == totalPages
     }
     
     /**
@@ -117,51 +118,52 @@ class MovieSearchListViewModel {
      *  Parameters - none
      *  returns - Bool indicating if table should insert additional items
      */
-    private func shouldInsertAdditionalItems() -> Bool {
-        return self.currentPage > 1
+    func shouldInsertAdditionalItems() -> Bool {
+        return currentPage > 1
     }
     
     /**
      * Handle the movie search result failure
      * Parameters - failure reason for the fetch
      */
-    private func handleMovieSearchResultFailure(reason:String) {
-        self.isFetchInProgress = false
-        self.delegate?.onFetchFailed(with: reason)
+    func handleMovieSearchResultFailure(reason:String) {
+        isFetchInProgress = false
+        delegate?.onFetchFailed(with: reason)
     }
     
     /**
      * Handle search result success
      * parameters - response received from server
      */
-    private func handleMovieSearchResultSuccess(response: MovieSearchListResponse) {
+    func handleMovieSearchResultSuccess(response: MovieSearchListResponse) {
         
-        self.currentPage = response.currentPage
-        self.isFetchInProgress = false
+        currentPage = response.currentPage
+        isFetchInProgress = false
         
-        self.movieResults.append(contentsOf: response.results)
-        self.total = self.movieResults.count
+        movieResults.append(contentsOf: response.results)
+        total = self.movieResults.count
+        totalPages = response.totalPages
         
-        guard self.didFindResults() else {
-            self.delegate?.onFetchFailed(with:Constants.searchFailureAlertText.localizedCapitalized)
+        guard didFindResults() else {
+            delegate?.onFetchFailed(with:Constants.searchFailureAlertText.localizedCapitalized)
             return
         }
         
         // check if the current page is equal to the total pages, if yes, we have reached max page limit
-        if self.isMaxPageLimitReached(response: response) {
-            self.hasReachedMaxPageLimit = true
+        if isMaxPageLimitReached() {
+            hasReachedMaxPageLimit = true
         }
         
         // if current page is greater than one then we want to insert the additional items
-        if self.shouldInsertAdditionalItems() {
+        if shouldInsertAdditionalItems() {
             
             let indexPathsToReload = self.calculateIndexPathsToReload(from: response.results)
-            self.delegate?.onFetchCompleted(with: indexPathsToReload)
+            delegate?.onFetchCompleted(with: indexPathsToReload)
             
         } else {
             
             // if current page is first page then we need to reload the table
-            self.delegate?.onFetchCompleted(with: .none)
+            delegate?.onFetchCompleted(with: .none)
         }
     }
     
@@ -169,7 +171,7 @@ class MovieSearchListViewModel {
     /**
      * Handle the movie search result
      */
-    private func handleMovieSearchResult(result:Result<MovieSearchListResponse, MovieSearchResponseError>){
+     func handleMovieSearchResult(result:Result<MovieSearchListResponse, MovieSearchResponseError>){
         
         switch result {
             // handle the failure for fetch
